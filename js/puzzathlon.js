@@ -192,6 +192,10 @@ puzzathlon.showStats = function(){
          str += "</tr>"
       }
    }
+   if (puzzathlon.raceData.duration){
+      str += "<tr style='color:" + puzzathlon.prop.statColor.complete + ";'><td align = left>Total time</td>";
+      str += "<td align = left>" + showTime(puzzathlon.raceData.duration) + "</td>";
+   }
    str += "</table>";
    puzzathlon.statsPanel.html(str);
 }
@@ -271,9 +275,13 @@ puzzathlon.showGrid = function(stage, hideCursor){
 puzzathlon.nextStage = function(stage){
    var raceData = puzzathlon.raceData;
    if (stage == raceData.stageCount){
+      raceData.finishTime = $.now();
+      raceData.duration = (raceData.finishTime - raceData.startTime)/1000;
+      puzzathlon.showStats();
       return;
    }
    raceData.stages[stage].startTime = $.now();
+   if (stage == 0 && !raceData.startTime) raceData.startTime = raceData.stages[stage].startTime;
    raceData.stages[stage].status = 1;
    raceData.stages[stage].show = 1;
    puzzathlon.showStats();
