@@ -23,8 +23,14 @@ puzzathlon.init = function(parentElement, properties){
       init: {
          fillColor:  "lightGreen",
          fontColor:  "darkGreen",
-         font:       "bold 56pt Arial",
+         font:       "bold 72pt " + $('body').css('font-family'),
          text:       "Click here\nto start\nthe race"
+      },
+      finish: {
+         fillColor:  "lightGreen",
+         fontColor:  "darkRed",
+         font:       "bold 56pt " + $('body').css('font-family'),
+         text:       "Congratulations!\nYou finished\nthe race"
       },
       minGridSize:   500,
       maxGridSize:   800,
@@ -33,8 +39,9 @@ puzzathlon.init = function(parentElement, properties){
          current:    "red",
          complete:   "green"
       },
-      raceUrl:       "readrace.php",
-      puzzleUrl:     "readpuzzle.php",
+      raceUrl:       "php/readrace.php",
+      puzzleUrl:     "php/readpuzzle.php",
+      logUrl:        "php/logaction.php",
       raceId:        0
    }
    $.extend(true, prop, properties);
@@ -42,14 +49,14 @@ puzzathlon.init = function(parentElement, properties){
    // create table frame and game elements
    var table = $("<table style='width: 100%'></table>");
    // header element
-   puzzathlon.infoPanel = $("<div style='font-size: 24pt; text-align: center;'>Заголовок (а что бы сюда написать?)</div>");
-   puzzathlon.header = $("<td colspan = 4 align=center></td>").append(puzzathlon.infoPanel);
+   puzzathlon.headerPanel = $("<div style='font-size: 16pt; text-align: center;'></div>");
+   puzzathlon.header = $("<td colspan = 4 align=center></td>").append(puzzathlon.headerPanel);
    var row = $("<tr></tr>");
    puzzathlon.header.appendTo(row);
    row.appendTo(table);
    row = $("<tr></tr>");
    // race statistic panel
-   puzzathlon.statsPanel = $("<div style='font-size:16pt'></div>");
+   puzzathlon.statsPanel = $("<div style='font-size:14pt'></div>");
    puzzathlon.leftCell = $("<td style='width: 50%' align=left valign=top></td>").append(puzzathlon.statsPanel);
    puzzathlon.leftCell.appendTo(row);
    // main grid panel
@@ -57,7 +64,7 @@ puzzathlon.init = function(parentElement, properties){
    puzzathlon.middleCell = $("<td align=center valign=top colspan=2></td>").append(puzzathlon.gridPanel);
    puzzathlon.middleCell.appendTo(row);
    // rule panel
-   puzzathlon.rulePanel = $("<div></div>");
+   puzzathlon.rulePanel = $("<div style='font-size:14pt'></div>");
    puzzathlon.rightCell = $("<td style='width: 50%' align=left valign=top></td>").append(puzzathlon.rulePanel);
    puzzathlon.rightCell.appendTo(row);
    row.appendTo(table);
@@ -99,6 +106,7 @@ puzzathlon.init = function(parentElement, properties){
    $.getJSON(prop.raceUrl, {id: prop.raceId},
       function(data){
          puzzathlon.raceData = data;
+         puzzathlon.headerPanel.html("<h1>" + puzzathlon.raceData.racename + "<\h1>");
          puzzathlon.showStats();
          puzzathlon.showRules(-1);
          puzzathlon.puzzleGrid.click(function(){puzzathlon.start();});
@@ -170,7 +178,7 @@ puzzathlon.ajastFrame = function(mainGrid){
 
 // function toi show statistics of race
 puzzathlon.showStats = function(){
-   var str ="<table style='width:100%'>"
+   var str ="<h2>Race schedule</h2><table style='width:100%'>";
    // loop all stages
    for(i=0; i < puzzathlon.raceData.stages.length; i++){
       stage = puzzathlon.raceData.stages[i];
@@ -247,6 +255,7 @@ puzzathlon.finishStage = function(stage, next){
          function(){  // after animation show next grid
             raceData.stages[stage].finishTime = $.now();
             raceData.stages[stage].duration = (raceData.stages[stage].finishTime - raceData.stages[stage].startTime)/1000;
+            puzzathlon.logAction(stage, "finish", '{"duration":'+raceData.stages[stage].duration+'}');
             raceData.stages[stage].show = 1;
             raceData.stages[stage].status = 2;
             puzzathlon.showStats();
@@ -271,16 +280,58 @@ puzzathlon.showGrid = function(stage, hideCursor){
    puzzathlon.ajastFrame(puzzathlon.puzzleGrid);
 }
 
+// logging of starting and finishing puzzle
+puzzathlon.logAction = function(stage, action, actionData){
+   if (puzzathlon.prop.logUrl)
+      $.post(
+         puzzathlon.prop.logUrl,
+         {
+            race:    puzzathlon.prop.raceId,
+            stage:   stage,
+            action:  action,
+            data:    actionData
+         },
+         function(){}
+         );
+}
+
+puzzathlon.finsihRace = function(){
+   prop = puzzathlon.prop;
+   var size = puzzathlon.gridSize();
+   puzzathlon.puzzleGrid.remove();
+   puzzathlon.puzzleGrid = $("<canvas id=puzzleGrid_ width=" + size + " height=" + size + ">");
+   puzzathlon.gridPanel.append(puzzathlon.puzzleGrid);
+   puzzathlon.puzzleGrid.drawRect({
+         fillStyle: prop.finish.fillColor,
+         x: 3, y: 3,
+         width: size - 6,
+         height: size - 6,
+         fromCenter: false
+      });
+   puzzathlon.puzzleGrid.drawText({
+         fillStyle: prop.finish.fontColor,
+         font: prop.finish.font,
+         x: size/2, y: size/2,
+         fromCenter: false,
+         text: prop.finish.text,
+         fromCenter: true
+      });
+   puzzathlon.ajastFrame(puzzathlon.puzzleGrid);
+}
+
 // start stage
 puzzathlon.nextStage = function(stage){
    var raceData = puzzathlon.raceData;
    if (stage == raceData.stageCount){
       raceData.finishTime = $.now();
       raceData.duration = (raceData.finishTime - raceData.startTime)/1000;
+      puzzathlon.finsihRace();
       puzzathlon.showStats();
+      puzzathlon.showRules(-1);
       return;
    }
    raceData.stages[stage].startTime = $.now();
+   puzzathlon.logAction(stage, "start", "");
    if (stage == 0 && !raceData.startTime) raceData.startTime = raceData.stages[stage].startTime;
    raceData.stages[stage].status = 1;
    raceData.stages[stage].show = 1;
@@ -292,6 +343,9 @@ puzzathlon.nextStage = function(stage){
       sudokuShooting(puzzathlon.puzzleGrid,
          {
             puzzleData: puzzathlon.getPuzzle(stage),
+            onShot: function(row, column, value){
+               puzzathlon.logAction(stage, "shot", '{"row":' + row + ', "column": ' + column + ', "value":' + value + '}');
+            },
             onComplete: function(successCount){
                if (successCount < 5){
                   raceData.stages[stage].name = raceData.stages[stage].name + " (" + (5 - successCount) + " miss)";
@@ -369,7 +423,7 @@ loopDrawing = function(gridCanvas, properties){
       pathLineWidth:    20,
 
       clue: {                      // color and text properties for obstacle cells
-         textFont:      "bold 56pt Arial",
+         textFont:      "bold 56pt " + $('body').css('font-family'),
          textColor:     "darkGreen"
       },
       obstacle: {                      // color and text properties for obstacle cells
@@ -673,25 +727,25 @@ sudokuShooting = function(gridCanvas, properties){
       sightLineWidth:   1,
       common: {                        // text proprties for common cells
          textColor:     "black",
-         textFont:      "48pt Arial"
+         textFont:      "48pt " + $('body').css('font-family')
       },
       goal: {                          // color and text properties for goal (not yet shooted) cells
          color:         "lightGreen",
          textColor:     "black",
-         textFont:      "48pt Arial"
+         textFont:      "48pt " + $('body').css('font-family')
       },
       goalsuccess: {                   // color and text properties for sucessfully shooted goal cells
          color:         "lightGreen",
          textColor:     "black",
-         textFont:      "48pt Arial"
+         textFont:      "48pt " + $('body').css('font-family')
       },
       goalerror: {                     // color and text properties for unsucessfully shooted goal cells
          color:         "pink",
          textColor:     "darkRed",
-         textFont:      "48pt Arial"
+         textFont:      "48pt " + $('body').css('font-family')
       },
       clue: {                          // color and text properties for clue cells
-         textFont:      "bold 48pt Arial",
+         textFont:      "bold 48pt " + $('body').css('font-family'),
          textColor:     "darkGreen"
       },
       extraShots:       true           // Is it possible to make shoot to nongoal cells?
@@ -920,6 +974,7 @@ sudokuShooting = function(gridCanvas, properties){
                if (prop.extraShots)
                   currentData.value = value;
             }else if (currentData.type == "goal" || currentData.type == "goalerror"){
+               if(prop.onShot) prop.onShot(prop.sightRow, prop.sightColumn, value);
                prop.shotCount++;
                currentData.value = value;
                if (checkShotValue(prop.sightRow, prop.sightColumn, value, currentData.goalValue)){

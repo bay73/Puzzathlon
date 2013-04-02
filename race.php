@@ -16,7 +16,7 @@ $id = $_REQUEST["id"];
    <script src="js/puzzathlon.js"></script>
    <script src="js/md5-min.js"></script>
 </head>
-<body>
+<body style="font-family: 'Curlz MT', Calibri, Sans-serif;">
 <script>
 <?php
    if($id > 0 && !$fs_global_logged){

@@ -1,10 +1,10 @@
 <?php
-require_once('php/profile.php');
+require_once('profile.php');
 header('Content-type: application/json; charset=utf-8');
 $id = $_REQUEST["id"];
 ?>
 <?php
-   require('php/database.php');
+   require('database.php');
    $result_race = mysql_query("SELECT race_name, race_rules FROM pztl_races WHERE race_id=".mysql_real_escape_string($id)."", $db);
   if ($race_row = mysql_fetch_assoc($result_race)) {
      echo  '{"racename":"'.$race_row['race_name'].'","rules":"'.$race_row['race_rules'].'","stages":[';
@@ -16,7 +16,7 @@ $id = $_REQUEST["id"];
                             " ORDER BY p.stage_num", $db);
       while($row = mysql_fetch_assoc($result)) {
          if ($puzzle_count > 0) echo ',';
-         echo '{"name":"'.$row['stage_name'].'","type":"'.$row['type_name'].'","desc":"'.$row['desc'].'","shootong":'.$row['is_shooting'].',"show":'.$row['is_show'].',"status":0,"puzzleId":'.$row['id'].',"rules":"'.$row['type_rules'].'"}';
+         echo '{"name":"'.$row['stage_name'].'","type":"'.$row['type_name'].'","desc":"'.$row['desc'].'","shootong":'.$row['is_shooting'].',"show":'.$row['is_show'].',"status":0,"puzzleId":'.$row['id'].',"rules":"'.str_replace(array("\r\n", "\n", "\r"),'<br/>',$row['type_rules']).'"}';
          $puzzle_count++;
       }
       echo '],"stageCount": '.$puzzle_count.'}';
