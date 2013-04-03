@@ -116,10 +116,10 @@ puzzathlon.init = function(parentElement, properties){
 }
 
 puzzathlon.processLogData = function(){
-   for(i = 0; i < puzzathlon.raceData.stages.length; i++){
+   for(var i = 0; i < puzzathlon.raceData.stages.length; i++){
       if (puzzathlon.raceData.stages[i].log){
          var logs = puzzathlon.raceData.stages[i].log;
-         for(j=0; j < logs.length; j++){
+         for(var j=0; j < logs.length; j++){
             if (logs[j].action == "finish" && logs[j].data){
                if (!puzzathlon.raceData.stages[i].duration){
                   puzzathlon.raceData.stages[i].duration = logs[j].data.duration;
@@ -135,9 +135,9 @@ puzzathlon.gridSize = function(){
    var wwidth = $(window).width();
    var wheight = $(window).height();
    if (wheight < wwidth){
-      pwidth = (wheight - 40) * 0.7;
+      var pwidth = (wheight - 40) * 0.7;
    }else{
-      pwidth = wwidth * 0.7;
+      var pwidth = wwidth * 0.7;
    }
    // restrict the size with given bounds
    if (pwidth < puzzathlon.prop.minGridSize) pwidth = puzzathlon.prop.minGridSize;
@@ -152,7 +152,7 @@ puzzathlon.ajastFrame = function(mainGrid){
    // find the size of main element (puzzle grid)
    var pwidth = puzzathlon.storedGridWidth;
    if (mainGrid){
-      pwidth = mainGrid.width() + 30;
+      var pwidth = mainGrid.width() + 30;
       puzzathlon.storedGridWidth = pwidth;
    }
    // three frame types - wide, narrow and medium
@@ -197,7 +197,7 @@ puzzathlon.showStats = function(){
    var str ="<h2>Race schedule</h2><table style='width:100%'>";
    // loop all stages
    for(i=0; i < puzzathlon.raceData.stages.length; i++){
-      stage = puzzathlon.raceData.stages[i];
+      var stage = puzzathlon.raceData.stages[i];
       if (stage.show){
          // choose color according to completeness of the stage
          var color = puzzathlon.prop.statColor.normal;
@@ -226,7 +226,7 @@ puzzathlon.showStats = function(){
 
 puzzathlon.showRules = function(stage){
    var header;
-   var rules
+   var rules;
    if (stage==-1){
       header = puzzathlon.raceData.racename;
       rules = puzzathlon.raceData.rules;
@@ -248,8 +248,7 @@ puzzathlon.showRules = function(stage){
       " <BR>Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat. Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante." +
       " <BR>Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci. Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat.";
    }
-   puzzathlon.rulePanel.html(str)
-   ;
+   puzzathlon.rulePanel.html(str);
 }
 
 puzzathlon.finishStage = function(stage, next){
@@ -312,7 +311,7 @@ puzzathlon.logAction = function(stage, action, actionData){
 }
 
 puzzathlon.finsihRace = function(){
-   prop = puzzathlon.prop;
+   var prop = puzzathlon.prop;
    var size = puzzathlon.gridSize();
    puzzathlon.puzzleGrid.remove();
    puzzathlon.puzzleGrid = $("<canvas id=puzzleGrid_ width=" + size + " height=" + size + ">");
@@ -388,8 +387,8 @@ puzzathlon.nextStage = function(stage){
 // start solving
 puzzathlon.start = function(){
    // look for current stage
-   for(i = 0; i < puzzathlon.raceData.stages.length; i++){
-      stage = puzzathlon.raceData.stages[i];
+   for(var i = 0; i < puzzathlon.raceData.stages.length; i++){
+      var stage = puzzathlon.raceData.stages[i];
       if (stage.status == 1){
          puzzathlon.initpuzzleDate(i, true);
          return;

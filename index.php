@@ -25,21 +25,20 @@ header('Content-type: text/html; charset=utf-8');
       $(".menubutton").button();
       $(".menubuttondisabled").button({disabled: true});
       </script>
-    </div>
   </td>
   </tr>
   <tr>
-    <td valign=top style="width:250px;height:88%;">
+    <td style="width:250px; height:88%; vertical-align:top;">
       <div class="ui-widget-header ui-corner-all" style="width:100%;height:100%;">
         Some text is supposed to be here
       </div>
     </td>
-    <td valign=top>
+    <td style="vertical-align:top;">
       <div>
         Welcome to Puzzathlon!<br>
       </div>
     </td>
-    <td valign=top style="width:200px;height:88%;">
+    <td style="width:200px; height:88%; vertical-align:top;">
       <?php
       require_once('php/loginpanel.php');
       ?>
