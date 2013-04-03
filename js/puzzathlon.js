@@ -106,12 +106,28 @@ puzzathlon.init = function(parentElement, properties){
    $.getJSON(prop.raceUrl, {id: prop.raceId},
       function(data){
          puzzathlon.raceData = data;
+         puzzathlon.processLogData();
          puzzathlon.headerPanel.html("<h1>" + puzzathlon.raceData.racename + "<\h1>");
          puzzathlon.showStats();
          puzzathlon.showRules(-1);
          puzzathlon.puzzleGrid.click(function(){puzzathlon.start();});
       }
    ).error(function(data) {alert("Error reading race data!"); console.log(data);});
+}
+
+puzzathlon.processLogData = function(){
+   for(i = 0; i < puzzathlon.raceData.stages.length; i++){
+      if (puzzathlon.raceData.stages[i].log){
+         var logs = puzzathlon.raceData.stages[i].log;
+         for(j=0; j < logs.length; j++){
+            if (logs[j].action == "finish" && logs[j].data){
+               if (!puzzathlon.raceData.stages[i].duration){
+                  puzzathlon.raceData.stages[i].duration = logs[j].data.duration;
+               }
+            }
+         }
+      }
+   }
 }
 
 // calculate the best size for grid
@@ -343,6 +359,7 @@ puzzathlon.nextStage = function(stage){
       sudokuShooting(puzzathlon.puzzleGrid,
          {
             puzzleData: puzzathlon.getPuzzle(stage),
+            restoreShots: raceData.stages[stage].log,
             onShot: function(row, column, value){
                puzzathlon.logAction(stage, "shot", '{"row":' + row + ', "column": ' + column + ', "value":' + value + '}');
             },
@@ -793,6 +810,15 @@ sudokuShooting = function(gridCanvas, properties){
       gridCanvas.keydown(function(event){
          shoot(gridCanvas, event.which);
       });
+      if (prop.restoreShots){
+         for(var i = 0; i < prop.restoreShots.length; i++){
+            if (prop.restoreShots[i].action == "shot"){
+               var shot = prop.restoreShots[i].data;
+               registerShot(prop, shot.row, shot.column, shot.value);
+            }
+         }
+
+      }
    }
 
    // draw function
@@ -945,6 +971,24 @@ sudokuShooting = function(gridCanvas, properties){
       return hex_md5(row+"_"+column+"_"+value) == goalValue;
    }
 
+   var registerShot = function(prop, row, column, value){
+      var currentData = prop.gridData.cellData[row][column];
+      prop.shotCount++;
+      currentData.value = value;
+      if (checkShotValue(row, column, value, currentData.goalValue)){
+         prop.successCount++;
+         currentData.type = "goalsuccess";
+      }else{
+         currentData.type = "goalerror";
+      }
+      if (prop.shotCount == prop.goalCount){
+         if (prop.onComplete){
+            prop.onComplete(prop.successCount);
+         }else{
+            setTimeout(function(){alert('You made ' + prop.shotCount + ' shots and closed ' + prop.successCount + ' goals');}, 1);
+         }
+      }
+   }
    var shoot = function(gridCanvas, keyCode){
       var prop = gridCanvas.sudokuProp;
       var value = null;
@@ -975,21 +1019,7 @@ sudokuShooting = function(gridCanvas, properties){
                   currentData.value = value;
             }else if (currentData.type == "goal" || currentData.type == "goalerror"){
                if(prop.onShot) prop.onShot(prop.sightRow, prop.sightColumn, value);
-               prop.shotCount++;
-               currentData.value = value;
-               if (checkShotValue(prop.sightRow, prop.sightColumn, value, currentData.goalValue)){
-                  prop.successCount++;
-                  currentData.type = "goalsuccess";
-               }else{
-                  currentData.type = "goalerror";
-               }
-               if (prop.shotCount == prop.goalCount){
-                  if (prop.onComplete){
-                     prop.onComplete(prop.successCount);
-                  }else{
-                     setTimeout(function(){alert('You made ' + prop.shotCount + ' shots and closed ' + prop.successCount + ' goals');}, 1);
-                  }
-               }
+               registerShot(prop, prop.sightRow, prop.sightColumn, value);
             }
          }
       }
