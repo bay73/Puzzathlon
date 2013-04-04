@@ -121,9 +121,7 @@ puzzathlon.processLogData = function(){
          var logs = puzzathlon.raceData.stages[i].log;
          for(var j=0; j < logs.length; j++){
             if (logs[j].action == "finish" && logs[j].data){
-               if (!puzzathlon.raceData.stages[i].duration){
-                  puzzathlon.raceData.stages[i].duration = logs[j].data.duration;
-               }
+               $.extend(true, puzzathlon.raceData.stages[i], logs[j].data );
             }
          }
       }
@@ -206,7 +204,12 @@ puzzathlon.showStats = function(){
          }else if (stage.status == 2){
             color = puzzathlon.prop.statColor.complete;
          }
-         str += "<tr style='color:" + color + ";'><td align = left>" + stage.name + "</td>";
+         if (stage.missCount > 1)
+            str += "<tr style='color:" + color + ";'><td align = left>" + stage.name + " (" + stage.missCount + " misses)</td>";
+         else if (stage.missCount == 1)
+            str += "<tr style='color:" + color + ";'><td align = left>" + stage.name + " (1 miss)</td>";
+         else
+            str += "<tr style='color:" + color + ";'><td align = left>" + stage.name + "</td>";
          // for completed stages show time spend, for uncompleted - description
          if (stage.duration){
             str += "<td align = left>" + showTime(stage.duration) + "</td>";
@@ -270,7 +273,10 @@ puzzathlon.finishStage = function(stage, next){
          function(){  // after animation show next grid
             raceData.stages[stage].finishTime = $.now();
             raceData.stages[stage].duration = (raceData.stages[stage].finishTime - raceData.stages[stage].startTime)/1000;
-            puzzathlon.logAction(stage, "finish", '{"duration":'+raceData.stages[stage].duration+'}');
+            if (raceData.stages[stage].missCount)
+               puzzathlon.logAction(stage, "finish", '{"duration":'+raceData.stages[stage].duration+', "missCount": '+raceData.stages[stage].missCount+'}');
+            else
+               puzzathlon.logAction(stage, "finish", '{"duration":'+raceData.stages[stage].duration+'}');
             raceData.stages[stage].show = 1;
             raceData.stages[stage].status = 2;
             puzzathlon.showStats();
@@ -364,7 +370,7 @@ puzzathlon.nextStage = function(stage){
             },
             onComplete: function(successCount){
                if (successCount < 5){
-                  raceData.stages[stage].name = raceData.stages[stage].name + " (" + (5 - successCount) + " miss)";
+                  raceData.stages[stage].missCount = (5 - successCount);
                }
                puzzathlon.finishStage(stage, stage + successCount + 1);
             }

@@ -32,12 +32,14 @@ $id = $_REQUEST["id"];
         }
       }
       $log_data = $log_data."]";
+      $is_show = $row['is_show'];
       if ($row['is_finished'] > 0) $status = 2;
+      if ($status != 0) $is_show = 1;
       echo '{"name":"'.$row['stage_name'].'",'.
              '"type":"'.$row['type_name'].'",'.
              '"desc":"'.$row['desc'].'",'.
              '"shootong":'.$row['is_shooting'].','.
-             '"show":'.$row['is_show'].','.
+             '"show":'.$is_show.','.
              '"status":'.$status.','.
              '"puzzleId":'.$row['id'].','.
              '"rules":"'.str_replace(array("\r\n", "\n", "\r"),'<br/>',$row['type_rules']).'",'.
