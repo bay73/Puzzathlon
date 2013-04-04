@@ -11,21 +11,21 @@ header('Content-type: text/html; charset=utf-8');
    <script src="js/jquery-1.9.1.min.js"></script>
    <script src="js/jquery-ui.min.js"></script>
 </head>
-<body class="ui-widget-content" style="height:95%;border: 0px;">
+<body class="ui-widget-content" style="height:95%;border: 0px; background-size:100% 100%; background-image:url('images/snowflakes.jpg');">
   <table style="width:100%;height:100%;">
   <tr>
     <td colspan=3>
       <table style="width:100%">
-      <tr>
-        <td style="width:50%;"><a class="menubutton" style="width:100%; height:45px" href="race.php?id=0">Mock Race</a></td>
-        <td style="width:50%;"><a class="<?php if ($fs_global_logged) echo 'menubutton'; else echo 'menubuttondisabled'; ?>" style="width:100%; height:45px" href="race.php?id=1">Test Race</a></td>
-      </tr>
+        <tr>
+          <td style="width:50%;"><a class="menubutton" style="width:100%; height:45px" href="race.php?id=0">Mock Race</a></td>
+          <td style="width:50%;"><a class="<?php if ($fs_global_logged) echo 'menubutton'; else echo 'menubuttondisabled'; ?>" style="width:100%; height:45px" href="race.php?id=1">Test Race</a></td>
+        </tr>
       </table>
       <script type="text/javascript">
       $(".menubutton").button();
       $(".menubuttondisabled").button({disabled: true});
       </script>
-  </td>
+    </td>
   </tr>
   <tr>
     <td style="width:250px; height:88%; vertical-align:top;">

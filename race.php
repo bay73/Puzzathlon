@@ -2,6 +2,7 @@
 require_once('php/profile.php');
 header('Content-type: text/html; charset=utf-8');
 $id = $_REQUEST["id"];
+if (!$id) $id = 0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,7 +17,7 @@ $id = $_REQUEST["id"];
    <script src="js/puzzathlon.js"></script>
    <script src="js/md5-min.js"></script>
 </head>
-<body style="font-family: 'Comic Sans MS', Calibri, Sans-serif;">
+<body style="font-family: 'Comic Sans MS', Calibri, Sans-serif; background-size:100% 100%; background-image:url('images/snowflakes.jpg');">
 <script>
 <?php
    if($id > 0 && !$fs_global_logged){

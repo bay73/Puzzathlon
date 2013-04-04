@@ -21,13 +21,12 @@ puzzathlon.init = function(parentElement, properties){
    var prop =
    {
       init: {
-         fillColor:  "lightGreen",
-         fontColor:  "darkGreen",
+         fontColor:  "darkBlue",
          font:       "bold 72pt " + $('body').css('font-family'),
-         text:       "Click here\nto start\nthe race"
+         image:      "images/biathlon.png"
       },
       finish: {
-         fillColor:  "lightGreen",
+         fillColor:  "lightBlue",
          fontColor:  "darkRed",
          font:       "bold 56pt " + $('body').css('font-family'),
          text:       "Congratulations!\nYou finished\nthe race"
@@ -37,7 +36,7 @@ puzzathlon.init = function(parentElement, properties){
       statColor:{
          normal:     "black",
          current:    "red",
-         complete:   "green"
+         complete:   "darkBlue"
       },
       raceUrl:       "php/readrace.php",
       puzzleUrl:     "php/readpuzzle.php",
@@ -86,21 +85,36 @@ puzzathlon.init = function(parentElement, properties){
    var size = puzzathlon.gridSize();
    puzzathlon.puzzleGrid = $("<canvas id=puzzleGrid_ width=" + size + " height=" + size + ">");
    puzzathlon.gridPanel.append(puzzathlon.puzzleGrid);
-   puzzathlon.puzzleGrid.drawRect({
-         fillStyle: prop.init.fillColor,
-         x: 3, y: 3,
-         width: size - 6,
-         height: size - 6,
-         fromCenter: false
-      });
-   puzzathlon.puzzleGrid.drawText({
-         fillStyle: prop.init.fontColor,
-         font: prop.init.font,
-         x: size/2, y: size/2,
-         fromCenter: false,
-         text: prop.init.text,
-         fromCenter: true
-      });
+   if (prop.init.fillColor){
+      puzzathlon.puzzleGrid.drawRect({
+            fillStyle: prop.init.fillColor,
+            x: 3, y: 3,
+            width: size - 6,
+            height: size - 6,
+            fromCenter: false,
+            cornerRadius: 30
+         });
+   }
+   if (prop.init.image){
+      puzzathlon.puzzleGrid.drawImage({
+            source: prop.init.image,
+            x: 3, y: 3,
+            width: size - 6,
+            height: size - 6,
+            fromCenter: false,
+            cornerRadius: 30
+         });
+   }
+   if(prop.init.text){
+      puzzathlon.puzzleGrid.drawText({
+            fillStyle: prop.init.fontColor,
+            font: prop.init.font,
+            x: size/2, y: size/2,
+            fromCenter: false,
+            text: prop.init.text,
+            fromCenter: true
+         });
+   }
    puzzathlon.ajastFrame(puzzathlon.puzzleGrid);
    $(window).resize(function(){puzzathlon.ajastFrame(null)});
    $.getJSON(prop.raceUrl, {id: prop.raceId},
@@ -327,7 +341,8 @@ puzzathlon.finsihRace = function(){
          x: 3, y: 3,
          width: size - 6,
          height: size - 6,
-         fromCenter: false
+         fromCenter: false,
+         cornerRadius: 30
       });
    puzzathlon.puzzleGrid.drawText({
          fillStyle: prop.finish.fontColor,
@@ -437,20 +452,20 @@ loopDrawing = function(gridCanvas, properties){
    // default property value
    var prop =
    {
-      gridlineColor:    "Green",       // color and width of common grid lines
+      gridlineColor:    "Blue",       // color and width of common grid lines
       gridLineWidth:    2,
-      borderColor:      "darkGreen",   // color and width of outlined grid lines
+      borderColor:      "darkBlue",   // color and width of outlined grid lines
       borderWidth:      8,
       pathColor:        "red",         // color and line width for drawing path
       pathLineWidth:    20,
 
       clue: {                      // color and text properties for obstacle cells
          textFont:      "bold 56pt " + $('body').css('font-family'),
-         textColor:     "darkGreen"
+         textColor:     "darkBlue"
       },
       obstacle: {                      // color and text properties for obstacle cells
          shape:         "rect",
-         fillColor:     "darkGreen"
+         fillColor:     "darkBlue"
       },
       blackcircle: {                   // color and text properties for black circles
          shape:         "circle",
@@ -461,7 +476,7 @@ loopDrawing = function(gridCanvas, properties){
          shape:         "circle",
          diameter:      0.65,
          strokeWidth:   8,
-         strokeColor:   "darkRed"
+         strokeColor:   "darkBlue"
       }
   }
 
@@ -624,7 +639,8 @@ loopDrawing = function(gridCanvas, properties){
          x: prop.borderWidth/2, y: prop.borderWidth/2,
          width: width,
          height: height,
-         fromCenter: false
+         fromCenter: false,
+         cornerRadius: width/40
       })
    };
 
@@ -741,9 +757,9 @@ sudokuShooting = function(gridCanvas, properties){
    // default property value
    var prop =
    {
-      gridlineColor:    "Green",       // color and width of common grid lines
+      gridlineColor:    "Blue",       // color and width of common grid lines
       gridLineWidth:    2,
-      borderColor:      "darkGreen",   // color and width of outlined grid lines
+      borderColor:      "darkBlue",   // color and width of outlined grid lines
       borderWidth:      8,
       sightColor:       "black",       // color and line width for sight "image"
       sightLineWidth:   1,
@@ -752,7 +768,7 @@ sudokuShooting = function(gridCanvas, properties){
          textFont:      "48pt " + $('body').css('font-family')
       },
       goal: {                          // color and text properties for goal (not yet shooted) cells
-         color:         "lightGreen",
+         color:         "lightBlue",
          textColor:     "black",
          textFont:      "48pt " + $('body').css('font-family')
       },
@@ -768,7 +784,7 @@ sudokuShooting = function(gridCanvas, properties){
       },
       clue: {                          // color and text properties for clue cells
          textFont:      "bold 48pt " + $('body').css('font-family'),
-         textColor:     "darkGreen"
+         textColor:     "darkBlue"
       },
       extraShots:       true           // Is it possible to make shoot to nongoal cells?
    }
@@ -891,7 +907,8 @@ sudokuShooting = function(gridCanvas, properties){
          x: prop.borderWidth/2, y: prop.borderWidth/2,
          width: width,
          height: height,
-         fromCenter: false
+         fromCenter: false,
+         cornerRadius: width/40
       })
       // draw borders of area (for each cell sompare area with areas below and at the right)
       for(var i = 0; i < gridData.size; i++){
