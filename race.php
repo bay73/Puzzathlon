@@ -11,13 +11,14 @@ if (!$id) $id = 0;
    <title>
       Puzzathlon
    </title>
+   <link rel="stylesheet" type="text/css" href="puzzathlon.css" />
    <script src="js/jquery-1.9.1.min.js"></script>
    <script src="js/jquery-ui.min.js"></script>
    <script src="js/jcanvas.min.js"></script>
    <script src="js/puzzathlon.js"></script>
    <script src="js/md5-min.js"></script>
 </head>
-<body style="font-family: 'Comic Sans MS', Calibri, Sans-serif; background-size:100% 100%; background-image:url('images/snowflakes.jpg');">
+<body>
 <script>
 <?php
    if($id > 0 && !$fs_global_logged){
