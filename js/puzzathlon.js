@@ -454,7 +454,7 @@ loopDrawing = function(gridCanvas, properties){
       borderColor:      "darkBlue",   // color and width of outlined grid lines
       borderWidth:      8,
       pathColor:        "red",         // color and line width for drawing path
-      pathLineWidth:    20,
+      pathLineWidth:    8,
 
       clue: {                      // color and text properties for obstacle cells
          textFont:      "bold 56pt " + $('body').css('font-family'),
@@ -464,18 +464,24 @@ loopDrawing = function(gridCanvas, properties){
          shape:         "rect",
          fillColor:     "darkBlue"
       },
+      crossing: {                      // color and text properties for crossings
+         shape:         "cross",
+         strokeWidth:   6,
+         diameter:      0.75,
+         strokeColor:   "darkBlue"
+      },
       blackcircle: {                   // color and text properties for black circles
          shape:         "circle",
-         diameter:      0.7,
+         diameter:      0.75,
          fillColor:     "darkBlue"
       },
       whitecircle: {                   // color and text properties for white circles
          shape:         "circle",
-         diameter:      0.65,
-         strokeWidth:   8,
+         diameter:      0.7,
+         strokeWidth:   6,
          strokeColor:   "darkBlue"
       }
-  }
+   }
 
    $.extend(true, prop, properties);
 
@@ -506,7 +512,14 @@ loopDrawing = function(gridCanvas, properties){
             gridData.cellData[circle.r][circle.c] = {type: "whitecircle"};
          }
       }
-      // mark whitecircle cells
+      // mark crossings
+      if (gridData.crossings){
+         for(var i = 0; i < gridData.crossings.length; i++){
+            var crossing = gridData.crossings[i];
+            gridData.cellData[crossing.r][crossing.c] = {type: "crossing"};
+         }
+      }
+      // mark clues
       if (gridData.clues){
          for(var i = 0; i < gridData.clues.length; i++){
             var clue = gridData.clues[i];
@@ -523,11 +536,11 @@ loopDrawing = function(gridCanvas, properties){
       gridCanvas.dragStartRow = -1;
       gridCanvas.dragStartColumn = -1;
       gridCanvas.draggable({
-          helper: function(){return $('<div id="loopdraghelper"></div>').appendTo('body');},
-          start:  function(event, ui){dragStart(gridCanvas, event.pageX - gridCanvas.offset().left, event.pageY - gridCanvas.offset().top); },
-          stop:   function(event, ui){dragStop(gridCanvas, event.pageX - gridCanvas.offset().left, event.pageY - gridCanvas.offset().top);},
-          drag:   function(event, ui){drag(gridCanvas, event.pageX - gridCanvas.offset().left, event.pageY - gridCanvas.offset().top);}
-       });
+         helper: function(){return $('<div id="loopdraghelper"></div>').appendTo('body');},
+         start:  function(event, ui){dragStart(gridCanvas, event.pageX - gridCanvas.offset().left, event.pageY - gridCanvas.offset().top); },
+         stop:   function(event, ui){dragStop(gridCanvas, event.pageX - gridCanvas.offset().left, event.pageY - gridCanvas.offset().top);},
+         drag:   function(event, ui){drag(gridCanvas, event.pageX - gridCanvas.offset().left, event.pageY - gridCanvas.offset().top);}
+      });
       draw(gridCanvas);
    }
 
@@ -557,7 +570,7 @@ loopDrawing = function(gridCanvas, properties){
                      fromCenter: false
                   })
                }
-               // if shape is circle, then fill draw circle
+               // if shape is circle, then draw circle
                if (prop[cellType] && prop[cellType].shape == "circle"){
                   gridCanvas.drawEllipse({
                      strokeWidth: prop[cellType].strokeWidth,
@@ -569,6 +582,21 @@ loopDrawing = function(gridCanvas, properties){
                      height: prop[cellType].diameter * cellheight - prop.gridLineWidth,
                      fromCenter: false
                   })
+               }
+               // if shape is cross, then draw cross
+               if (prop[cellType] && prop[cellType].shape == "cross"){
+                  gridCanvas.drawLine({
+                     strokeWidth: prop[cellType].strokeWidth,
+                     strokeStyle: prop[cellType].strokeColor,
+                     x1: prop.borderWidth/2 + (c+0.5) * cellwidth, y1: prop.borderWidth/2 + r * cellheight,
+                     x2: prop.borderWidth/2 + (c+0.5) * cellwidth, y2: prop.borderWidth/2 + (r+1) * cellheight
+                  });
+                  gridCanvas.drawLine({
+                     strokeWidth: prop[cellType].strokeWidth,
+                     strokeStyle: prop[cellType].strokeColor,
+                     x1: prop.borderWidth/2 + c * cellwidth, y1: prop.borderWidth/2 + (r+0.5) * cellheight,
+                     x2: prop.borderWidth/2 + (c+1) * cellwidth, y2: prop.borderWidth/2 + (r+0.5) * cellheight
+                  });
                }
                // if value is defined for cell, then digit
                var value = gridData.cellData[r][c].value;
@@ -664,7 +692,7 @@ loopDrawing = function(gridCanvas, properties){
       }
       if(hex_md5(answerStr) == gridData.answerValue){
          if (prop.onComplete){
-            setTimeout(function(){prop.onComplete(), 1});
+            setTimeout(prop.onComplete, 1);
          }else{
             setTimeout(function(){alert('You finished the loop');}, 1);
          }

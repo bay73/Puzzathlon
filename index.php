@@ -31,7 +31,8 @@ header('Content-type: text/html; charset=utf-8');
   <tr>
     <td style="width:250px; height:88%; vertical-align:top;">
       <div class="ui-widget-header ui-corner-all" style="width:100%;height:100%;">
-        Some table of results is suppose to be here
+        <h2>The Race results</h2>
+        The race has just started.
       </div>
     </td>
     <td style="vertical-align:top;">
