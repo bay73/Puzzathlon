@@ -18,7 +18,7 @@ h4		{ font-size:18px; }
 
 header		{ margin:0 auto; padding:25px 0 45px 0;  }
 
-nav		{ width:990px; margin:0 auto; font:normal 19px georgia,'times new roman',times,serif; text-align:right; letter-spacing:1px; }
+nav		{ width:990px; margin:0 auto; font:16px 'lucida grande',verdana,helvetica,sans-serif; text-align:right; letter-spacing:1px; }
 nav ul		{ list-style:none; display:inline; }
 nav li		{ width:100px; display:inline; margin-left:40px; }
 nav a		{ text-decoration:none; color:#121212; padding:0 0 1px 0; }

@@ -15,7 +15,7 @@ if (get_magic_quotes_gpc())
 		return is_array($array) ? array_map('stripslashes_array', $array) : stripslashes($array);
 	}
 
-  $_REQUEST = stripslashes_array($_REQUEST);
+   $_REQUEST = stripslashes_array($_REQUEST);
 	$_GET = stripslashes_array($_GET);
 	$_POST = stripslashes_array($_POST);
 	$_COOKIE = stripslashes_array($_COOKIE);
@@ -26,16 +26,15 @@ checkLogin();
 
 // Функция проверки соединени
 function checkLogin(){
-  global $fs_global_logged, $fs_global_displayname, $fs_global_userid;
-  $fs_global_logged = false;
-  // берем параметры сессии
-  if (empty($_SESSION['login']) or empty($_SESSION['password'])){
-     if(isset($_COOKIE['login']) and isset($_COOKIE['password'])){
-       $_SESSION['login'] = $_COOKIE['login'];
-       $_SESSION['password'] = $_COOKIE['password'];
-     }
-  }
-
+   global $fs_global_logged, $fs_global_displayname, $fs_global_userid;
+   $fs_global_logged = false;
+   // берем параметры сессии
+   if (empty($_SESSION['login']) or empty($_SESSION['password'])){
+      if(isset($_COOKIE['login']) and isset($_COOKIE['password'])){
+         $_SESSION['login'] = $_COOKIE['login'];
+         $_SESSION['password'] = $_COOKIE['password'];
+      }
+   }
   if (!empty($_SESSION['login']) and !empty($_SESSION['password']))
   {
     $login = $_SESSION['login'];
@@ -49,7 +48,8 @@ function checkLogin(){
     $storepass = getStorePassword($login, $pass);
     require('database.php');
     // проверяем наличие пользователя в базе
-    $result = mysql_query("SELECT id, displayname FROM fs_users WHERE username='".mysql_real_escape_string($login)."' and password='".$storepass."'", $db);
+    $query = "SELECT id,displayname FROM fs_users WHERE username='".mysql_real_escape_string($login)."' and password='pass'";
+    $result = mysql_query($query, $db);
     $myrow = mysql_fetch_array($result);
     if (!empty($myrow['id'])){
        // если найден, то выставляем глобальные переменные
