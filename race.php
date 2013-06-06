@@ -11,7 +11,7 @@ if (!$id) $id = 0;
    <title>
       Puzzathlon
    </title>
-   <link rel="stylesheet" type="text/css" href="puzzathlon.css" />
+   <link rel="stylesheet" type="text/css" href="css/style.css" />
    <script src="js/jquery-1.9.1.min.js"></script>
    <script src="js/jquery-ui.min.js"></script>
    <script src="js/jcanvas.min.js"></script>

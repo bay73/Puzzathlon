@@ -28,8 +28,8 @@ header('Content-type: text/html; charset=utf-8');
                      echo '<div id="uLogin" data-ulogin="display=small;fields=first_name,last_name;providers=facebook,twitter,google,livejournal;hidden=other;redirect_uri=http%3A%2F%2Fforsmarts.com%2Fpuzzathlonbeta%2Flogin.php"></div>';
                   }
                   ?>
-                  
-                  
+
+
                </li>
 				</ul>
 			</nav>
@@ -65,7 +65,7 @@ header('Content-type: text/html; charset=utf-8');
 				<div id="openModal3" class="modalDialog">
 					<div>
 						<a href="#close" title="close" class="close">X</a>
-						<h2 class="p0m0">Welcome to our site 3!</h2>
+						<h2 class="p0m0">Sorry but this function is not working yet!</h2>
 						<p><b>Lorem ipsum dolor sit amet, Nulla nec tortor. Donec id elit quis purus consectetur consequat.</b></p>
 						<p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci.</p>
 						<p>Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat.</p>
@@ -75,7 +75,7 @@ header('Content-type: text/html; charset=utf-8');
 				<div id="openModal4" class="modalDialog">
 					<div>
 						<a href="#close" title="close" class="close">X</a>
-						<h2 class="p0m0">Welcome to our site 4!</h2>
+						<h2 class="p0m0">Sorry but this function is not working yet!</h2>
 						<p><b>Lorem ipsum dolor sit amet, Nulla nec tortor. Donec id elit quis purus consectetur consequat.</b></p>
 						<p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci.</p>
 						<p>Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat.</p>
@@ -85,7 +85,7 @@ header('Content-type: text/html; charset=utf-8');
 				<div id="openModal5" class="modalDialog">
 					<div>
 						<a href="#close" title="close" class="close">X</a>
-						<h2 class="p0m0">Welcome to our site 5!</h2>
+						<h2 class="p0m0">Sorry but this function is not working yet!</h2>
 						<p><b>Lorem ipsum dolor sit amet, Nulla nec tortor. Donec id elit quis purus consectetur consequat.</b></p>
 						<p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci.</p>
 						<p>Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat.</p>

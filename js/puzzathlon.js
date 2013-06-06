@@ -28,7 +28,7 @@ puzzathlon.init = function(parentElement, properties){
       finish: {
          fillColor:  "lightBlue",
          fontColor:  "darkRed",
-         font:       "bold 56pt " + $('body').css('font-family'),
+         font:       "bold 48pt " + $('body').css('font-family'),
          text:       "Congratulations!\nYou finished\nthe race"
       },
       minGridSize:   500,

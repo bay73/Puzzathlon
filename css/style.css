@@ -1,5 +1,5 @@
 html, body	{ height:100%; width:100%; margin:0; padding:0; zoom:1; }
-body		{ min-width:999px; min-height:625px; background:#12b3b3 url('images/biathlst.png') no-repeat 0 10px; font:12px 'lucida grande',verdana,helvetica,sans-serif;
+body		{ min-width:500px; min-height:625px; background:#12b3b3 url('images/biathlst.png') no-repeat 0 10px; font:12px 'lucida grande',verdana,helvetica,sans-serif;
 		color: #444; margin:0 auto; }
 h1, h2, h3, h4	{ font-family:georgia,'times new roman',times,serif; color:#484848; padding:10px 15px 7px 15px; }
 h1		{ font-size:52px; font-weight: normal; color:#484848; letter-spacing:1px; }
