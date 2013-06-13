@@ -14,13 +14,18 @@
 			<a href="#reportProblem" class="circle" style="float:left; margin-right:40px;">Report a problem</a>
 				<div id="reportProblem" class="modalDialog">
 					<div>
+						<script>
+							function postProblem(){
+								$.post('php/postproblem.php', {message: $('#probelmText').val()}, function(){alert('Report is posted. Thank you!');} );
+							}
+						</script>
 						<a href="#close" title="close" class="close">X</a>
 						<h2 class="p0m0">Report a problem</h2>
 						<p align=left><b>Write your message here and press Submit.</b></p>
 						<br>
 						<textarea id="probelmText"></textarea>
 						<br>
-						<button onclick="location.href='#close';">Submit</button>
+						<button onclick="postProblem(); location.href='#close';">Submit</button>
 					</div>
 				</div>
 		</div>

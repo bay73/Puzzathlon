@@ -7,6 +7,7 @@ header('Content-type: text/html; charset=utf-8');
 <head>
 <meta charset="utf-8" />
 <title>Welcome to Puzzathlon!</title>
+<script src="js/jquery-1.9.1.min.js"></script>
 <meta name="description" content="Puzzathlon" />
 <meta name="keywords" content="Puzzathlon" />
 <link rel="stylesheet" href="css/style.css" />
