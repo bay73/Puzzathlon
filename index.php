@@ -58,40 +58,9 @@ header('Content-type: text/html; charset=utf-8');
 	<div class="clearfix"></div>
 
 	<footer>
-		<div id="circles">
-			<a href="race.php?id=1" class="circle" style="float:left; margin-right:40px;">Test race</a>
-			<a href="race.php?id=0" class="circle" style="float:left; margin-right:40px;">Mock race</a>
-			<a href="#openModal3" class="circle" style="float:left; margin-right:40px;">Rating</a>
-				<div id="openModal3" class="modalDialog">
-					<div>
-						<a href="#close" title="close" class="close">X</a>
-						<h2 class="p0m0">Sorry but this function is not working yet!</h2>
-						<p><b>Lorem ipsum dolor sit amet, Nulla nec tortor. Donec id elit quis purus consectetur consequat.</b></p>
-						<p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci.</p>
-						<p>Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat.</p>
-					</div>
-				</div>
-			<a href="#openModal4" class="circle" style="float:left; margin-right:40px;">Schmating</a>
-				<div id="openModal4" class="modalDialog">
-					<div>
-						<a href="#close" title="close" class="close">X</a>
-						<h2 class="p0m0">Sorry but this function is not working yet!</h2>
-						<p><b>Lorem ipsum dolor sit amet, Nulla nec tortor. Donec id elit quis purus consectetur consequat.</b></p>
-						<p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci.</p>
-						<p>Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat.</p>
-					</div>
-				</div>
-			<a href="#openModal5" class="circle" style="float:left; margin-right:40px;">блаблабла</a>
-				<div id="openModal5" class="modalDialog">
-					<div>
-						<a href="#close" title="close" class="close">X</a>
-						<h2 class="p0m0">Sorry but this function is not working yet!</h2>
-						<p><b>Lorem ipsum dolor sit amet, Nulla nec tortor. Donec id elit quis purus consectetur consequat.</b></p>
-						<p>Nam congue semper tellus. Sed erat dolor, dapibus sit amet, venenatis ornare, ultrices ut, nisi. Aliquam ante. Suspendisse scelerisque dui nec velit. Duis augue augue, gravida euismod, vulputate ac, facilisis id, sem. Morbi in orci.</p>
-						<p>Nulla purus lacus, pulvinar vel, malesuada ac, mattis nec, quam. Nam molestie scelerisque quam. Nullam feugiat cursus lacus.orem ipsum dolor sit amet, consectetur adipiscing elit. Donec libero risus, commodo vitae, pharetra mollis, posuere eu, pede. Nulla nec tortor. Donec id elit quis purus consectetur consequat.</p>
-					</div>
-				</div>
-		</div>
+<?php
+require_once('php/menu.php');
+?>
 	</footer>
 </body>
 </html>

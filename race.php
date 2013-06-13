@@ -28,5 +28,10 @@ if (!$id) $id = 0;
    }
 ?>
 </script>
+   <div id = "racefooter">
+<?php
+require_once('php/menu.php');
+?>
+   </div>
 </body>
 </html>

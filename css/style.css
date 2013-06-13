@@ -31,7 +31,7 @@ article		{ width:530px; max-height:300px; float:right; line-height:1.75; overflo
 p		{ line-height:1.75; }
 #circles	{ width:990px; margin:0 auto;  padding:25px 0 }
 .circle		{ width:150px; height:150px; display:block; border-radius:100px; border:4px double #ccc; font-size:17px; color:#888; text-align:center;
-		line-height:150px; text-shadow:0 1px 0 #fff; text-decoration:none;  background:#ddd; }
+		line-height:150px; text-shadow:0 1px 0 #fff; text-decoration:none;  background:#ddd;}
 .circle:hover	{ border:4px double #bbb; color:#aaa; text-decoration:none; background:#e6e6e6  url('images/puzzle.jpg'); }
 
 footer		{ width:100%; text-align:center; height:200px; margin-top:-200px; background:#fff; }
@@ -45,3 +45,11 @@ footer		{ width:100%; text-align:center; height:200px; margin-top:-200px; backgr
 		font-weight:bold; -webkit-border-radius:12px; -moz-border-radius:12px; border-radius:12px; -moz-box-shadow:1px 1px 3px #000; -webkit-box-shadow:1px 1px 3px #000;
 		box-shadow: 1px 1px 3px #000; }
 .close:hover	{ background:#12b3b3; }
+
+
+#racefooter          { width:50px; text-align:center; height:200px; background:#fff; position:absolute; left: 0px; bottom: 0px; z-index:10;border-bottom-right-radius:40px;border-top-right-radius:40px;;transition: width 1s; -webkit-transition: width 1s;}
+#racefooter #circles { width:0; overflow:hidden;}
+#racefooter:hover    { width:100%;border-bottom-right-radius:0;border-top-right-radius:0;transition: width 1s; -webkit-transition: width 1s;}
+#racefooter:hover #circles {width:990px; overflow:hidden; transition: width 1s; -webkit-transition: width 1s;}
+
+#probelmText   {width:650px;height:300px;}
